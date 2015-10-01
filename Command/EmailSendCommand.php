@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use SmartInformationSystems\EmailBundle\Spool\SmartInformationSystemsEmailSpool;
 
 /**
- * Отправка тестового письма.
+ * Обработка очереди писем.
  *
  */
 class EmailSendCommand extends ContainerAwareCommand
