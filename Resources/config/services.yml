@@ -1,9 +1,9 @@
 services:
-    swiftmailer.spool.smart_systems_spool:
+    swiftmailer.spool.smart_information_systems_spool:
         class: SmartInformationSystems\EmailBundle\Spool\SmartInformationSystemsEmailSpool
         arguments: ['@doctrine.orm.entity_manager']
-    swiftmailer.mailer.default.spool.smart_systems_spool:
-        alias: swiftmailer.spool.smart_systems_spool
+    swiftmailer.mailer.default.spool.smart_information_systems_spool:
+        alias: swiftmailer.spool.smart_information_systems_spool
     sis_mailer:
         class: SmartInformationSystems\EmailBundle\Service\Mailer
         arguments: ["@mailer", "@templating"]
