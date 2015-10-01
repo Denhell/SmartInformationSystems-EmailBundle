@@ -22,6 +22,9 @@ class SmartInformationSystemsEmailExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('smart_information_systems_email.from_email', $config['from_email']);
+        $container->setParameter('smart_information_systems_email.from_name', $config['from_name']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

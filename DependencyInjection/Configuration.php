@@ -20,9 +20,9 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('smart_information_systems_email');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode->children()
+            ->scalarNode('from_email')->end()
+            ->scalarNode('from_name')->end();
 
         return $treeBuilder;
     }

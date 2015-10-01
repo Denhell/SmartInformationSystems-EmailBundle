@@ -6,4 +6,4 @@ services:
         alias: swiftmailer.spool.smart_information_systems_spool
     sis_mailer:
         class: SmartInformationSystems\EmailBundle\Service\Mailer
-        arguments: ["@mailer", "@templating"]
+        arguments: ["@service_container", "@mailer", "@templating"]

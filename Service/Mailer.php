@@ -2,6 +2,7 @@
 
 namespace SmartInformationSystems\EmailBundle\Service;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -13,10 +14,16 @@ class Mailer
     private $mailer;
     private $templating;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
+    private $fromEmail;
+    private $fromName;
+
+    public function __construct(ContainerInterface $container, \Swift_Mailer $mailer, EngineInterface $templating)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
+
+        $this->fromEmail = $container->getParameter('smart_information_systems_email.from_email');
+        $this->fromName = $container->getParameter('smart_information_systems_email.from_name');
     }
 
     /**
@@ -29,7 +36,7 @@ class Mailer
      *
      * @return int
      */
-    public function send($email, $template, array $templateVars = array(), array $from)
+    public function send($email, $template, array $templateVars = array(), array $from = array())
     {
         $message = \Swift_Message::newInstance()
             ->setSubject(
@@ -38,8 +45,13 @@ class Mailer
                     $templateVars
                 )
             )
-            ->setFrom($from[0], $from[1])
             ->setTo($email);
+
+        if (empty($from)) {
+            $message->setFrom($this->fromEmail, $this->fromName);
+        } else {
+            $message->setFrom($from[0], $from[1]);
+        }
 
         $templateVars = array_merge(
             $templateVars,
