@@ -22,7 +22,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->scalarNode('from_email')->end()
-            ->scalarNode('from_name')->end();
+            ->scalarNode('from_name')->end()
+            ->scalarNode('images_as_attachments')->defaultValue(FALSE)->end();
 
         return $treeBuilder;
     }

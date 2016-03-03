@@ -24,6 +24,7 @@ class SmartInformationSystemsEmailExtension extends Extension
 
         $container->setParameter('smart_information_systems_email.from_email', $config['from_email']);
         $container->setParameter('smart_information_systems_email.from_name', $config['from_name']);
+        $container->setParameter('smart_information_systems_email.images_as_attachments', !empty($config['images_as_attachments']));
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

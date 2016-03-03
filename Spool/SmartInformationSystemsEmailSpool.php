@@ -2,6 +2,7 @@
 
 namespace SmartInformationSystems\EmailBundle\Spool;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use \Doctrine\ORM\EntityManager;
 
 use SmartInformationSystems\EmailBundle\Entity\Email;
@@ -14,6 +15,8 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
      * @var EntityManager
      */
     private $em;
+
+    private $imagesAsAttachments = FALSE;
 
     // TODO: Вынести в настройки
     private $testDomains = array(
@@ -29,10 +32,13 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
      * Конструктор.
      *
      * @param EntityManager $em Подключеник к БД
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, ContainerInterface $container)
     {
         $this->em = $em;
+
+        $this->imagesAsAttachments = $container->getParameter('smart_information_systems_email.images_as_attachments');
 
         // Лимит по умолчанию
         $this->setMessageLimit(100);
@@ -86,6 +92,8 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
 
         $this->em->persist($email);
         $this->em->flush();
+
+        return TRUE;
     }
 
     /**
@@ -122,6 +130,41 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
 
             $message->setBody(
                 $email->getBody(),
+                'text/html',
+                'utf8'
+            );
+
+            $body = $email->getBody();
+
+            if ($this->imagesAsAttachments && preg_match_all('/<img.+?src\s*=\s*[\'"]([^\'"]+)[\'"]/i', $body, $matches)) {
+
+                foreach ($matches[1] as $key => $url) {
+                    if (strpos($body, $matches[0][$key]) === FALSE) {
+                        continue;
+                    }
+                    try {
+                        if ($img = file_get_contents($url)) {
+                            $urlInfo = parse_url($url);
+                            $body = str_replace(
+                                $matches[0][$key],
+                                str_replace(
+                                    $url,
+                                    $message->embed(
+                                        \Swift_Image::newInstance($img, basename($urlInfo['path']))
+                                    ),
+                                    $matches[0][$key]
+                                ),
+                                $body
+                            );
+                        }
+                    } catch (\Exception $e) {
+                        print $e->getMessage() . "\n";
+                    }
+                }
+            }
+
+            $message->setBody(
+                $body,
                 'text/html',
                 'utf8'
             );
