@@ -16,7 +16,17 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
      */
     private $em;
 
+    /**
+     * Отправлять изображения, как вложения.
+     *
+     * @var bool
+     */
     private $imagesAsAttachments = FALSE;
+
+    /**
+     * @var string
+     */
+    private $replyTo;
 
     // TODO: Вынести в настройки
     private $testDomains = array(
@@ -39,6 +49,7 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
         $this->em = $em;
 
         $this->imagesAsAttachments = $container->getParameter('smart_information_systems_email.images_as_attachments');
+        $this->replyTo = $container->getParameter('smart_information_systems_email.reply_to');
 
         // Лимит по умолчанию
         $this->setMessageLimit(100);
@@ -127,6 +138,10 @@ class SmartInformationSystemsEmailSpool extends \Swift_ConfigurableSpool
                 ->setSubject($email->getSubject())
                 ->setFrom($email->getFromEmail(), $email->getFromName())
                 ->setTo($email->getEmail());
+
+            if ($this->replyTo) {
+                $message->addReplyTo($this->replyTo);
+            }
 
             $message->setBody(
                 $email->getBody(),
