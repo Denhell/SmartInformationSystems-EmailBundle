@@ -8,8 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  * @ORM\Table(
+ *     name="sis_email",
  *     indexes={
- *         @ORM\Index(name="i_sent", columns={"is_sent"}),
+ *         @ORM\Index(name="i_sent", columns={"sent"}),
  *         @ORM\Index(name="i_email", columns={"email"})
  *     }
  * )
