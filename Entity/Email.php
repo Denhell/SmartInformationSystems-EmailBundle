@@ -1,22 +1,26 @@
 <?php
-
 namespace SmartInformationSystems\EmailBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Письмо в очереди на отправку.
+ * Письмо в очереди на отправку
  *
- * @ORM\Entity
- * @ORM\Table(name="sis_email", indexes={@ORM\Index(name="i_sent", columns={"is_sent"}), @ORM\Index(name="i_email", columns={"email"})})
+ * @ORM\Entity()
+ * @ORM\Table(
+ *     indexes={
+ *         @ORM\Index(name="i_sent", columns={"is_sent"}),
+ *         @ORM\Index(name="i_email", columns={"email"})
+ *     }
+ * )
  * @ORM\HasLifecycleCallbacks()
  */
 class Email
 {
     /**
-     * Идентификатор.
+     * Идентификатор
      *
-     * @var int
+     * @var integer
      *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
@@ -25,25 +29,25 @@ class Email
     protected $id;
 
     /**
-     * Адрес получателя.
+     * Адрес получателя
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $email;
 
     /**
-     * Тема.
+     * Тема
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $subject;
 
     /**
-     * Тело письма.
+     * Тело письма
      *
      * @var string
      *
@@ -52,71 +56,67 @@ class Email
     protected $body;
 
     /**
-     * Адрес отправителя.
+     * Адрес отправителя
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, name="from_email")
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $fromEmail;
 
     /**
-     * Имя отправителя.
+     * Имя отправителя
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, name="from_name")
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $fromName;
 
     /**
-     * Отправлено ли.
+     * Отправлено ли
      *
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="is_sent")
+     * @ORM\Column(type="boolean")
      */
-    protected $isSent;
+    protected $sent;
 
     /**
-     * Дата создания.
+     * Дата создания
      *
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $createdAt;
 
     /**
-     * Дата последнего изменения.
+     * Дата последнего изменения
      *
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
-     * Дата отправки.
+     * Дата отправки
      *
      * @var \DateTime
      *
-     * @ORM\Column(name="sent_at", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $sentAt;
 
-    /**
-     * Конструктор.
-     *
-     */
     public function __construct()
     {
-        $this->isSent = FALSE;
+        $this->sent = false;
     }
 
 
     /**
-     * Возвращает идентификатор.
+     * Возвращает идентификатор
      *
      * @return integer
      */
@@ -126,13 +126,11 @@ class Email
     }
 
     /**
-     * Устанавливает адрес получателя.
-     *
-     * @param string $email Адрес получателя
+     * @param string $email
      *
      * @return Email
      */
-    public function setEmail($email)
+    public function setEmail($email): Email
     {
         $this->email = $email;
 
@@ -140,8 +138,6 @@ class Email
     }
 
     /**
-     * Возвращает адрес получателя.
-     *
      * @return string
      */
     public function getEmail()
@@ -150,13 +146,11 @@ class Email
     }
 
     /**
-     * Устанавливает тему.
-     *
-     * @param string $subject Тема
+     * @param string $subject
      *
      * @return Email
      */
-    public function setSubject($subject)
+    public function setSubject($subject): Email
     {
         $this->subject = $subject;
 
@@ -164,8 +158,6 @@ class Email
     }
 
     /**
-     * Возвращает тему.
-     *
      * @return string
      */
     public function getSubject()
@@ -174,12 +166,11 @@ class Email
     }
 
     /**
-     * Устанвливает тело.
+     * @param string $body
      *
-     * @param string $body Тело
      * @return Email
      */
-    public function setBody($body)
+    public function setBody($body): Email
     {
         $this->body = $body;
 
@@ -187,8 +178,6 @@ class Email
     }
 
     /**
-     * Возвращает тело.
-     *
      * @return string
      */
     public function getBody()
@@ -197,13 +186,11 @@ class Email
     }
 
     /**
-     * Устанавливает адрес отправителя.
-     *
-     * @param string $fromEmail Адрес отправителя
+     * @param string $fromEmail
      *
      * @return Email
      */
-    public function setFromEmail($fromEmail)
+    public function setFromEmail($fromEmail): Email
     {
         $this->fromEmail = $fromEmail;
 
@@ -211,8 +198,6 @@ class Email
     }
 
     /**
-     * Возвращает адрес отправителя.
-     *
      * @return string
      */
     public function getFromEmail()
@@ -221,13 +206,11 @@ class Email
     }
 
     /**
-     * Устанавливает имя отправителя.
-     *
-     * @param string $fromName Имя отправителя
+     * @param string $fromName
      *
      * @return Email
      */
-    public function setFromName($fromName)
+    public function setFromName($fromName): Email
     {
         $this->fromName = $fromName;
 
@@ -235,8 +218,6 @@ class Email
     }
 
     /**
-     * Возвращает имя отправителя.
-     *
      * @return string
      */
     public function getFromName()
@@ -245,15 +226,13 @@ class Email
     }
 
     /**
-     * Устанавливает отправлено ли письмо.
-     *
-     * @param boolean $isSent Отправлено ли письмо
+     * @param boolean $sent
      *
      * @return Email
      */
-    public function setIsSent($isSent)
+    public function setSent($sent): Email
     {
-        $this->isSent = $isSent;
+        $this->sent = $sent;
 
         return $this;
     }
@@ -263,27 +242,12 @@ class Email
      *
      * @return boolean
      */
-    public function getIsSent()
+    public function isSent()
     {
-        return $this->isSent;
+        return $this->sent;
     }
 
     /**
-     * Устанавливает дату создания.
-     *
-     * @param \DateTime $createdAt
-     * @return Email
-     */
-    private function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Возвращает дату создания.
-     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -292,21 +256,6 @@ class Email
     }
 
     /**
-     * Устанавливает дату последнего обновления.
-     *
-     * @param \DateTime $updatedAt Дата последнего обновления
-     * @return Email
-     */
-    private function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Возвращает дату последнего обновления.
-     *
      * @return \DateTime
      */
     public function getUpdatedAt()
@@ -315,12 +264,11 @@ class Email
     }
 
     /**
-     * Устанавливает дату отправки.
-     *
      * @param \DateTime $sentAt
+     *
      * @return Email
      */
-    public function setSentAt($sentAt)
+    public function setSentAt($sentAt): Email
     {
         $this->sentAt = $sentAt;
 
@@ -328,8 +276,6 @@ class Email
     }
 
     /**
-     * Возвращает дату отправки.
-     *
      * @return \DateTime
      */
     public function getSentAt()
@@ -338,22 +284,18 @@ class Email
     }
 
     /**
-     * Автоматическая установка даты создания.
-     *
      * @ORM\PrePersist
      */
     public function prePersistHandler()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->createdAt = new \DateTime();
     }
 
     /**
-     * Автоматическая установка даты обновления.
-     *
      * @ORM\PreUpdate
      */
     public function preUpdateHandler()
     {
-        $this->setUpdatedAt(new \DateTime());
+        $this->updatedAt = new \DateTime();
     }
 }

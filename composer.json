@@ -1,11 +1,13 @@
 {
-    "name" : "SmartInformationSystems/email-bundle",
+    "name" : "Smart-information-systems/email-bundle",
     "description" : "Email bundle",
     "type" : "symfony-bundle",
-    "authors" : [{
-        "name" : "YK115",
-        "email" : "info@smart-systems.ru"
-    }],
+    "authors" : [
+        {
+            "name" : "YK115",
+            "email" : "info@smart-systems.ru"
+        }
+    ],
     "keywords" : [
         "email"
     ],
@@ -13,15 +15,17 @@
         "MIT"
     ],
     "require" : {
+        "php": ">=7.0",
+        "symfony/symfony": "3.2.*"
     },
     "autoload" : {
         "psr-0" : { "SmartInformationSystems\\EmailBundle" : "" }
     },
-    "target-dir" : "SmartInformationSystems/EmailBundle",
     "extra" : {
         "branch-alias" : {
-            "dev-master" : "1.0-dev"
+            "dev-master" : "2.0-dev"
         }
     }
 }
 
+s

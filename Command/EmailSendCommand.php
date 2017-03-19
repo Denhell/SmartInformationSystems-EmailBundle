@@ -1,5 +1,4 @@
 <?php
-
 namespace SmartInformationSystems\EmailBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -15,6 +14,9 @@ use SmartInformationSystems\EmailBundle\Spool\SmartInformationSystemsEmailSpool;
  */
 class EmailSendCommand extends ContainerAwareCommand
 {
+    /**
+     * @inheritdoc
+     */
     protected function configure()
     {
         $this
@@ -24,9 +26,12 @@ class EmailSendCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $mailer     = $this->getContainer()->get('mailer');
+        $mailer = $this->getContainer()->get('mailer');
         $transport  = $mailer->getTransport();
 
         if ($transport instanceof \Swift_Transport_SpoolTransport) {

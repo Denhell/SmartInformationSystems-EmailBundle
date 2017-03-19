@@ -1,5 +1,4 @@
 <?php
-
 namespace SmartInformationSystems\EmailBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
