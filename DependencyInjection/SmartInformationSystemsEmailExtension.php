@@ -20,7 +20,7 @@ class SmartInformationSystemsEmailExtension extends Extension
         $loader->load('services.yml');
 
         $configurationContainer = $container->getDefinition(
-            'smart_information_systems_email.storage.configuration_container'
+            'smart_information_systems_email.mailer.configuration_container'
         );
         $configurationContainer->addMethodCall('setConfig', [$config]);
     }
