@@ -1,33 +1,37 @@
 <?php
-
 namespace SmartInformationSystems\EmailBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
-/**
- * Класс для отправки писем.
- *
- */
 class Mailer
 {
+    /**
+     * @var Mailer\ConfigurationContainer
+     */
+    private $configuration;
+
+    /**
+     * @var \Swift_Mailer
+     */
     private $mailer;
+
+    /**
+     * @var EngineInterface
+     */
     private $templating;
 
-    private $fromEmail;
-    private $fromName;
-
-    public function __construct(ContainerInterface $container, \Swift_Mailer $mailer, EngineInterface $templating)
-    {
+    public function __construct(
+        Mailer\ConfigurationContainer $configurationContainer,
+        \Swift_Mailer $mailer,
+        EngineInterface $templating
+    ) {
+        $this->configuration = $configurationContainer;
         $this->mailer = $mailer;
         $this->templating = $templating;
-
-        $this->fromEmail = $container->getParameter('smart_information_systems_email.from_email');
-        $this->fromName = $container->getParameter('smart_information_systems_email.from_name');
     }
 
     /**
-     * Отправка письма.
+     * Отправка письма
      *
      * @param string $email Кому
      * @param string $template Шаблон
@@ -48,7 +52,7 @@ class Mailer
             ->setTo($email);
 
         if (empty($from)) {
-            $message->setFrom($this->fromEmail, $this->fromName);
+            $message->setFrom($this->configuration->getFromEmail(), $this->configuration->getFromName());
         } else {
             $message->setFrom($from[0], $from[1]);
         }

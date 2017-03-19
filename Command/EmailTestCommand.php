@@ -1,5 +1,4 @@
 <?php
-
 namespace SmartInformationSystems\EmailBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -13,6 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EmailTestCommand extends ContainerAwareCommand
 {
+    /**
+     * @inheritdoc
+     */
     protected function configure()
     {
         $this
@@ -22,11 +24,16 @@ class EmailTestCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $email = $input->getOption('email');
 
-        $output->writeLn('Sending test email to: ' . $email);
+        $output->writeln(
+            sprintf('Sending test email to: %s', $email)
+        );
 
         $message = \Swift_Message::newInstance()
             ->setSubject('SmartInformationSystemsEmailBundle test email')
@@ -35,7 +42,7 @@ class EmailTestCommand extends ContainerAwareCommand
         $message->setBody(
             $this->getContainer()->get('templating')->render(
                 'SmartInformationSystemsEmailBundle:Email:test.html.twig',
-                array('email' => $email)
+                ['email' => $email]
             ),
             'text/html',
             'utf8'
