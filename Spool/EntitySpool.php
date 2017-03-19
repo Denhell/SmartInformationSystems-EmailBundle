@@ -97,7 +97,7 @@ class EntitySpool extends \Swift_ConfigurableSpool
         foreach ($emails as $email) {
             $this->em->beginTransaction();
             /** @var Email $email */
-            $email = $this->em->find($email->getId(), \Doctrine\DBAL\LockMode::PESSIMISTIC_WRITE);
+            $email = $this->em->find(Email::class, $email->getId(), \Doctrine\DBAL\LockMode::PESSIMISTIC_WRITE);
             if ($email->isSent()) {
                 $this->em->rollback();
                 continue;
@@ -107,8 +107,11 @@ class EntitySpool extends \Swift_ConfigurableSpool
                 ->setSubject($email->getSubject())
                 ->setFrom($email->getFromEmail(), $email->getFromName())
                 ->setTo($email->getEmail())
-                ->addReplyTo($this->configuration->getReplyTo())
             ;
+
+            if ($replyTo = $this->configuration->getReplyTo()) {
+                $message->setReplyTo($replyTo);
+            }
 
             $message->setBody(
                 $this->configuration->isImagesAsAttachments()
