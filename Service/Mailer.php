@@ -40,7 +40,7 @@ class Mailer
      *
      * @return int
      */
-    public function send($email, $template, array $templateVars = array(), array $from = array())
+    public function send($email, $template, array $templateVars = [], array $from = [])
     {
         $message = \Swift_Message::newInstance()
             ->setSubject(
