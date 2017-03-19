@@ -1,6 +1,7 @@
 <?php
 namespace SmartInformationSystems\EmailBundle\Command;
 
+use SmartInformationSystems\EmailBundle\Service\Mailer\ConfigurationContainer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,6 +14,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class EmailTestCommand extends ContainerAwareCommand
 {
     /**
+     * @var ConfigurationContainer
+     */
+    private $configuration;
+
+    /**
      * @inheritdoc
      */
     protected function configure()
@@ -20,8 +26,20 @@ class EmailTestCommand extends ContainerAwareCommand
         $this
             ->setName('sis_email:test')
             ->setDescription('Sending test email')
-            ->addOption('email', null, InputOption::VALUE_REQUIRED, 'E-mail')
+            ->addOption('email', null, InputOption::VALUE_REQUIRED, 'E-mail', 'test@example.com')
         ;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        parent::initialize($input, $output);
+
+        $this->configuration = $this->getContainer()->get(
+            'smart_information_systems_email.mailer.configuration_container'
+        );
     }
 
     /**
@@ -37,7 +55,7 @@ class EmailTestCommand extends ContainerAwareCommand
 
         $message = \Swift_Message::newInstance()
             ->setSubject('SmartInformationSystemsEmailBundle test email')
-            ->setFrom('info@smart-systems.ru', 'Smart Information Systems')
+            ->setFrom($this->configuration->getFromEmail(), $this->configuration->getFromName())
             ->setTo($email);
         $message->setBody(
             $this->getContainer()->get('templating')->render(
