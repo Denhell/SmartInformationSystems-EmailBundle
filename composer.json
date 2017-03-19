@@ -1,5 +1,5 @@
 {
-    "name" : "Smart-information-systems/email-bundle",
+    "name" : "smart-information-systems/email-bundle",
     "description" : "Email bundle",
     "type" : "symfony-bundle",
     "authors" : [
