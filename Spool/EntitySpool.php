@@ -77,7 +77,7 @@ class EntitySpool extends \Swift_ConfigurableSpool
     /**
      * @inheritdoc
      */
-    public function flushQueue(\Swift_Transport $transport, &$failedRecipients = NULL)
+    public function flushQueue(\Swift_Transport $transport, &$failedRecipients = null)
     {
         if (!$transport->isStarted()) {
             $transport->start();
@@ -186,6 +186,6 @@ class EntitySpool extends \Swift_ConfigurableSpool
             }
         }
 
-        return false
+        return false;
     }
 }

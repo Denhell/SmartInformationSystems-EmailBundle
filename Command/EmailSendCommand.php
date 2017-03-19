@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use SmartInformationSystems\EmailBundle\Spool\SmartInformationSystemsEmailSpool;
+use SmartInformationSystems\EmailBundle\Spool\EntitySpool;
 
 /**
  * Обработка очереди писем.
@@ -36,7 +36,7 @@ class EmailSendCommand extends ContainerAwareCommand
 
         if ($transport instanceof \Swift_Transport_SpoolTransport) {
             $spool = $transport->getSpool();
-            if ($spool instanceof SmartInformationSystemsEmailSpool) {
+            if ($spool instanceof EntitySpool) {
                 if ($limit = $input->getOption('limit')) {
                     $spool->setMessageLimit($limit);
                 }
