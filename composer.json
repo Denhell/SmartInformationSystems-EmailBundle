@@ -19,7 +19,7 @@
         "symfony/symfony": "3.2.*"
     },
     "autoload" : {
-        "psr-4" : { "SmartInformationSystems\\EmailBundle" : "" }
+        "psr-4" : { "SmartInformationSystems\\EmailBundle\\" : "" }
     },
     "extra" : {
         "branch-alias" : {
