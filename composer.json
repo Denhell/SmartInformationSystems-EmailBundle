@@ -16,7 +16,8 @@
     ],
     "require" : {
         "php": ">=7.0",
-        "symfony/symfony": "3.2.*"
+        "roave/security-advisories": "dev-master",
+        "symfony/symfony": "~3.2"
     },
     "autoload" : {
         "psr-4" : { "SmartInformationSystems\\EmailBundle\\" : "" }
