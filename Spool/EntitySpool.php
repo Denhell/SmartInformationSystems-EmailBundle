@@ -118,7 +118,7 @@ class EntitySpool extends \Swift_ConfigurableSpool
                     ? $this->attacheImages($email->getBody(), $message)
                     : $email->getBody(),
                 'text/html',
-                'utf8'
+                'utf-8'
             );
 
             if ($this->isTestMessage($message) || $transport->send($message, $failedRecipients)) {

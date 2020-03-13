@@ -63,7 +63,7 @@ class EmailTestCommand extends ContainerAwareCommand
                 ['email' => $email]
             ),
             'text/html',
-            'utf8'
+            'utf-8'
         );
 
         $this->getContainer()->get('mailer')->send($message);
