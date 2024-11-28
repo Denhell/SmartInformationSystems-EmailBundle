@@ -1,5 +1,5 @@
 {
-    "name" : "smart-information-systems/email-bundle",
+    "name" : "denhell/smartinformationsystems-emailbundle",
     "description" : "Email bundle",
     "type" : "symfony-bundle",
     "authors" : [
@@ -15,9 +15,9 @@
         "MIT"
     ],
     "require" : {
-        "php": ">=7.0",
-        "roave/security-advisories": "dev-master",
-        "symfony/symfony": "~3.2"
+        "php": ">=8.0",
+        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
+        "roave/security-advisories": "dev-master"
     },
     "autoload" : {
         "psr-4" : { "SmartInformationSystems\\EmailBundle\\" : "" }
