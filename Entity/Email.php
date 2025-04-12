@@ -5,110 +5,95 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Письмо в очереди на отправку
- *
- * @ORM\Entity()
- * @ORM\Table(
- *     name="sis_email",
- *     indexes={
- *         @ORM\Index(name="i_sent", columns={"sent"}),
- *         @ORM\Index(name="i_email", columns={"email"})
- *     }
- * )
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'sis_email')]
+#[ORM\Index(name: 'i_sent', columns: ['sent'])]
+#[ORM\Index(name: 'i_email', columns: ['email'])]
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class Email
 {
     /**
      * Идентификатор
      *
      * @var integer
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned"=true})
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
     /**
      * Адрес получателя
      *
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=false)
      */
-    protected $email;
+    #[ORM\Column(type: 'string', nullable: false)]
+    protected string $email;
 
     /**
      * Тема
      *
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=false)
      */
-    protected $subject;
+    #[ORM\Column(type: 'string', nullable: false)]
+    protected string $subject;
 
     /**
      * Тело письма
      *
      * @var string
-     *
-     * @ORM\Column(type="text", nullable=false)
      */
-    protected $body;
+    #[ORM\Column(type: 'text', nullable: false)]
+    protected string $body;
 
     /**
      * Адрес отправителя
      *
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=false)
      */
-    protected $fromEmail;
+    #[ORM\Column(type: 'string', nullable: false)]
+    protected string $fromEmail;
 
     /**
      * Имя отправителя
      *
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=false)
      */
-    protected $fromName;
+    #[ORM\Column(type: 'string', nullable: false)]
+    protected string $fromName;
 
     /**
      * Отправлено ли
      *
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $sent;
+    #[ORM\Column(type: 'boolean')]
+    protected ?bool $sent = null;
 
     /**
      * Дата создания
      *
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTimeInterface
      */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    protected \DateTimeInterface $createdAt;
 
     /**
      * Дата последнего изменения
      *
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeInterface
      */
-    protected $updatedAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTimeInterface $updatedAt = null;
 
     /**
      * Дата отправки
      *
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeInterface
      */
-    protected $sentAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTimeInterface $sentAt = null;
 
     public function __construct()
     {
@@ -284,17 +269,13 @@ class Email
         return $this->sentAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function prePersistHandler()
     {
         $this->createdAt = new \DateTime();
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function preUpdateHandler()
     {
         $this->updatedAt = new \DateTime();

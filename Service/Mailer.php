@@ -2,32 +2,18 @@
 namespace SmartInformationSystems\EmailBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
+use Symfony\Component\Mailer\Mailer as SymfonyMailer;
 
 class Mailer
 {
-    /**
-     * @var Mailer\ConfigurationContainer
-     */
-    private $configuration;
-
-    /**
-     * @var \Swift_Mailer
-     */
-    private $mailer;
-
-    /**
-     * @var EngineInterface
-     */
-    private $templating;
 
     public function __construct(
-        Mailer\ConfigurationContainer $configurationContainer,
-        \Swift_Mailer $mailer,
-        EngineInterface $templating
+        private Mailer\ConfigurationContainer $configurationContainer,
+        private SymfonyMailer $mailer,
+        private Environment $templating,
     ) {
-        $this->configuration = $configurationContainer;
-        $this->mailer = $mailer;
-        $this->templating = $templating;
+
     }
 
     /**

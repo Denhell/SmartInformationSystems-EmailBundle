@@ -1,7 +1,7 @@
 <?php
 namespace SmartInformationSystems\EmailBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,7 +12,7 @@ use SmartInformationSystems\EmailBundle\Spool\EntitySpool;
  * Обработка очереди писем.
  *
  */
-class EmailSendCommand extends ContainerAwareCommand
+class EmailSendCommand extends Command
 {
     /**
      * @inheritdoc

@@ -14,4 +14,4 @@ services:
         arguments:
             - '@smart_information_systems_email.mailer.configuration_container'
             - '@mailer'
-            - '@templating'
+            - '@twig'
